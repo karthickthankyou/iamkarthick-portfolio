@@ -1,13 +1,25 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql'
 import { SocialsService } from './socials.service'
 import { Social } from './entities/social.entity'
 import { FindManySocialArgs, FindUniqueSocialArgs } from './dto/find.args'
 import { CreateSocialInput } from './dto/create-social.input'
 import { UpdateSocialInput } from './dto/update-social.input'
+import { Resume } from '../resumes/entities/resume.entity'
+import { PrismaService } from 'src/common/prisma/prisma.service'
 
 @Resolver(() => Social)
 export class SocialsResolver {
-  constructor(private readonly socialsService: SocialsService) {}
+  constructor(
+    private readonly socialsService: SocialsService,
+    private readonly prisma: PrismaService,
+  ) {}
 
   @Mutation(() => Social)
   createSocial(@Args('createSocialInput') args: CreateSocialInput) {
@@ -32,5 +44,12 @@ export class SocialsResolver {
   @Mutation(() => Social)
   removeSocial(@Args() args: FindUniqueSocialArgs) {
     return this.socialsService.remove(args)
+  }
+
+  @ResolveField(() => Resume)
+  resume(@Parent() parent: Social) {
+    return this.prisma.resume.findUnique({
+      where: { id: parent.resumeId },
+    })
   }
 }

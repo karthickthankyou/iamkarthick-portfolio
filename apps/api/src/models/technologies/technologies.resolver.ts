@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql'
 import { TechnologiesService } from './technologies.service'
 import { Technology } from './entities/technology.entity'
 import {
@@ -7,10 +14,15 @@ import {
 } from './dto/find.args'
 import { CreateTechnologyInput } from './dto/create-technology.input'
 import { UpdateTechnologyInput } from './dto/update-technology.input'
+import { Project } from '../projects/entities/project.entity'
+import { PrismaService } from 'src/common/prisma/prisma.service'
 
 @Resolver(() => Technology)
 export class TechnologiesResolver {
-  constructor(private readonly technologiesService: TechnologiesService) {}
+  constructor(
+    private readonly technologiesService: TechnologiesService,
+    private readonly prisma: PrismaService,
+  ) {}
 
   @Mutation(() => Technology)
   createTechnology(@Args('createTechnologyInput') args: CreateTechnologyInput) {
@@ -35,5 +47,12 @@ export class TechnologiesResolver {
   @Mutation(() => Technology)
   removeTechnology(@Args() args: FindUniqueTechnologyArgs) {
     return this.technologiesService.remove(args)
+  }
+
+  @ResolveField(() => Project)
+  project(@Parent() parent: Technology) {
+    return this.prisma.project.findUnique({
+      where: { id: parent.projectId },
+    })
   }
 }
