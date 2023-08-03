@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Resume {
+    id       Int      @id @default(autoincrement())
+    fullName String
+    summary  String
+    skills   String[]
+
+    experience Experience[]
+    education  Education[]
+    socials    Social[]
+    projects   Project[]
+}
+
+model Project {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+
+    title       String
+    description String
+    images      String[]
+    github      String?
+    linesOfCode Int
+    tags        String[]
+
+    urls         Url[]
+    category     Category
+    technologies Technology[]
+    resume       Resume?      @relation(fields: [resumeId], references: [id])
+    resumeId     Int?
+}
+
+model Url {
+    id          Int      @id @default(autoincrement())
+    title       String
+    description String
+    url         String
+    project     Project? @relation(fields: [projectId], references: [id])
+    projectId   Int?
+}
+
+model Technology {
+    id          Int    @id @default(autoincrement())
+    name        String
+    description String
+
+    project   Project? @relation(fields: [projectId], references: [id])
+    projectId Int?
+
+    @@unique([name])
+}
+
+enum Category {
+    FRONTEND
+    BACKEND
+    FULLSTACK
+    DAPP
+    OTHER
+}
+
+model Social {
+    id          Int     @id @default(autoincrement())
+    title       String
+    description String?
+    url         String
+    resume      Resume? @relation(fields: [resumeId], references: [id])
+    resumeId    Int?
+}
+
+model Experience {
+    id       Int       @id @default(autoincrement())
+    resumeId Int
+    title    String
+    company  String
+    start    DateTime
+    end      DateTime?
+    details  String[]
+    resume   Resume    @relation(fields: [resumeId], references: [id])
+}
+
+model Education {
+    id       Int       @id @default(autoincrement())
+    resumeId Int
+    school   String
+    degree   String
+    start    DateTime
+    end      DateTime?
+    details  String[]
+    resume   Resume    @relation(fields: [resumeId], references: [id])
+}

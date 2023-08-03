@@ -1,0 +1,625 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Resume {
+  id: Int!
+  fullName: String!
+  summary: String!
+  skills: [String!]!
+}
+
+type Project {
+  github: String
+  category: Category!
+  resumeId: Int
+  id: Int!
+  createdAt: DateTime!
+  title: String!
+  description: String!
+  images: [String!]!
+  linesOfCode: Int!
+  tags: [String!]!
+}
+
+enum Category {
+  FRONTEND
+  BACKEND
+  FULLSTACK
+  DAPP
+  OTHER
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Url {
+  projectId: Int
+  id: Int!
+  title: String!
+  description: String!
+  url: String!
+}
+
+type Technology {
+  projectId: Int
+  id: Int!
+  name: String!
+  description: String!
+}
+
+type Social {
+  resumeId: Int
+  id: Int!
+  title: String!
+  description: String!
+  url: String!
+}
+
+type Experience {
+  end: DateTime
+  id: Int!
+  resumeId: Int!
+  title: String!
+  company: String!
+  start: DateTime!
+  details: [String!]!
+}
+
+type Education {
+  end: DateTime
+  id: Int!
+  resumeId: Int!
+  school: String!
+  degree: String!
+  start: DateTime!
+  details: [String!]!
+}
+
+type Query {
+  resumes(where: ResumeWhereInput, orderBy: [ResumeOrderByWithRelationInput!], cursor: ResumeWhereUniqueInput, take: Int, skip: Int, distinct: [ResumeScalarFieldEnum!]): [Resume!]!
+  resume(where: ResumeWhereUniqueInput): Resume!
+  projects(where: ProjectWhereInput, orderBy: [ProjectOrderByWithRelationInput!], cursor: ProjectWhereUniqueInput, take: Int, skip: Int, distinct: [ProjectScalarFieldEnum!]): [Project!]!
+  project(where: ProjectWhereUniqueInput): Project!
+  urls(where: UrlWhereInput, orderBy: [UrlOrderByWithRelationInput!], cursor: UrlWhereUniqueInput, take: Int, skip: Int, distinct: [UrlScalarFieldEnum!]): [Url!]!
+  url(where: UrlWhereUniqueInput): Url!
+  technologies(where: TechnologyWhereInput, orderBy: [TechnologyOrderByWithRelationInput!], cursor: TechnologyWhereUniqueInput, take: Int, skip: Int, distinct: [TechnologyScalarFieldEnum!]): [Technology!]!
+  technology(where: TechnologyWhereUniqueInput): Technology!
+  socials(where: SocialWhereInput, orderBy: [SocialOrderByWithRelationInput!], cursor: SocialWhereUniqueInput, take: Int, skip: Int, distinct: [SocialScalarFieldEnum!]): [Social!]!
+  social(where: SocialWhereUniqueInput): Social!
+  experiences(where: ExperienceWhereInput, orderBy: [ExperienceOrderByWithRelationInput!], cursor: ExperienceWhereUniqueInput, take: Int, skip: Int, distinct: [ExperienceScalarFieldEnum!]): [Experience!]!
+  experience(where: ExperienceWhereUniqueInput): Experience!
+  educations(where: EducationWhereInput, orderBy: [EducationOrderByWithRelationInput!], cursor: EducationWhereUniqueInput, take: Int, skip: Int, distinct: [EducationScalarFieldEnum!]): [Education!]!
+  education(where: EducationWhereUniqueInput): Education!
+}
+
+input ResumeWhereInput {
+  id: IntFilter
+  fullName: StringFilter
+  summary: StringFilter
+  skills: StringListFilter
+  experience: ExperienceListRelationFilter
+  education: EducationListRelationFilter
+  socials: SocialListRelationFilter
+  projects: ProjectListRelationFilter
+  AND: [ResumeWhereInput!]
+  OR: [ResumeWhereInput!]
+  NOT: [ResumeWhereInput!]
+}
+
+input IntFilter {
+  equals: Int
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+}
+
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: String
+  mode: QueryMode
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+input StringListFilter {
+  equals: [String!]
+  has: String
+  hasEvery: [String!]
+  hasSome: [String!]
+  isEmpty: Boolean
+}
+
+input ExperienceListRelationFilter {
+  every: ExperienceWhereInput
+  some: ExperienceWhereInput
+  none: ExperienceWhereInput
+}
+
+input ExperienceWhereInput {
+  id: IntFilter
+  resumeId: IntFilter
+  title: StringFilter
+  company: StringFilter
+  start: DateTimeFilter
+  end: DateTimeFilter
+  details: StringListFilter
+  resume: ResumeRelationFilter
+  AND: [ExperienceWhereInput!]
+  OR: [ExperienceWhereInput!]
+  NOT: [ExperienceWhereInput!]
+}
+
+input DateTimeFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+}
+
+input ResumeRelationFilter {
+  is: ResumeWhereInput
+  isNot: ResumeWhereInput
+}
+
+input EducationListRelationFilter {
+  every: EducationWhereInput
+  some: EducationWhereInput
+  none: EducationWhereInput
+}
+
+input EducationWhereInput {
+  id: IntFilter
+  resumeId: IntFilter
+  school: StringFilter
+  degree: StringFilter
+  start: DateTimeFilter
+  end: DateTimeFilter
+  details: StringListFilter
+  resume: ResumeRelationFilter
+  AND: [EducationWhereInput!]
+  OR: [EducationWhereInput!]
+  NOT: [EducationWhereInput!]
+}
+
+input SocialListRelationFilter {
+  every: SocialWhereInput
+  some: SocialWhereInput
+  none: SocialWhereInput
+}
+
+input SocialWhereInput {
+  id: IntFilter
+  title: StringFilter
+  description: StringFilter
+  url: StringFilter
+  resumeId: IntFilter
+  resume: ResumeRelationFilter
+  AND: [SocialWhereInput!]
+  OR: [SocialWhereInput!]
+  NOT: [SocialWhereInput!]
+}
+
+input ProjectListRelationFilter {
+  every: ProjectWhereInput
+  some: ProjectWhereInput
+  none: ProjectWhereInput
+}
+
+input ProjectWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  title: StringFilter
+  description: StringFilter
+  images: StringListFilter
+  github: StringFilter
+  linesOfCode: IntFilter
+  tags: StringListFilter
+  category: EnumCategoryFilter
+  resumeId: IntFilter
+  urls: UrlListRelationFilter
+  technologies: TechnologyListRelationFilter
+  resume: ResumeRelationFilter
+  AND: [ProjectWhereInput!]
+  OR: [ProjectWhereInput!]
+  NOT: [ProjectWhereInput!]
+}
+
+input EnumCategoryFilter {
+  equals: Category
+  in: [Category!]
+  notIn: [Category!]
+  not: Category
+}
+
+input UrlListRelationFilter {
+  every: UrlWhereInput
+  some: UrlWhereInput
+  none: UrlWhereInput
+}
+
+input UrlWhereInput {
+  id: IntFilter
+  title: StringFilter
+  description: StringFilter
+  url: StringFilter
+  projectId: IntFilter
+  project: ProjectRelationFilter
+  AND: [UrlWhereInput!]
+  OR: [UrlWhereInput!]
+  NOT: [UrlWhereInput!]
+}
+
+input ProjectRelationFilter {
+  is: ProjectWhereInput
+  isNot: ProjectWhereInput
+}
+
+input TechnologyListRelationFilter {
+  every: TechnologyWhereInput
+  some: TechnologyWhereInput
+  none: TechnologyWhereInput
+}
+
+input TechnologyWhereInput {
+  id: IntFilter
+  name: StringFilter
+  description: StringFilter
+  projectId: IntFilter
+  project: ProjectRelationFilter
+  AND: [TechnologyWhereInput!]
+  OR: [TechnologyWhereInput!]
+  NOT: [TechnologyWhereInput!]
+}
+
+input ResumeOrderByWithRelationInput {
+  id: SortOrder
+  fullName: SortOrder
+  summary: SortOrder
+  skills: SortOrder
+  experience: ExperienceOrderByRelationAggregateInput
+  education: EducationOrderByRelationAggregateInput
+  socials: SocialOrderByRelationAggregateInput
+  projects: ProjectOrderByRelationAggregateInput
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input ExperienceOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input EducationOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input SocialOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input ProjectOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input ResumeWhereUniqueInput {
+  id: Int
+}
+
+enum ResumeScalarFieldEnum {
+  id
+  fullName
+  summary
+  skills
+}
+
+input ProjectOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  title: SortOrder
+  description: SortOrder
+  images: SortOrder
+  github: SortOrder
+  linesOfCode: SortOrder
+  tags: SortOrder
+  category: SortOrder
+  resumeId: SortOrder
+  urls: UrlOrderByRelationAggregateInput
+  technologies: TechnologyOrderByRelationAggregateInput
+  resume: ResumeOrderByWithRelationInput
+}
+
+input UrlOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input TechnologyOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input ProjectWhereUniqueInput {
+  id: Int
+}
+
+enum ProjectScalarFieldEnum {
+  id
+  createdAt
+  title
+  description
+  images
+  github
+  linesOfCode
+  tags
+  category
+  resumeId
+}
+
+input UrlOrderByWithRelationInput {
+  id: SortOrder
+  title: SortOrder
+  description: SortOrder
+  url: SortOrder
+  projectId: SortOrder
+  project: ProjectOrderByWithRelationInput
+}
+
+input UrlWhereUniqueInput {
+  id: Int
+}
+
+enum UrlScalarFieldEnum {
+  id
+  title
+  description
+  url
+  projectId
+}
+
+input TechnologyOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  description: SortOrder
+  projectId: SortOrder
+  project: ProjectOrderByWithRelationInput
+}
+
+input TechnologyWhereUniqueInput {
+  id: Int
+}
+
+enum TechnologyScalarFieldEnum {
+  id
+  name
+  description
+  projectId
+}
+
+input SocialOrderByWithRelationInput {
+  id: SortOrder
+  title: SortOrder
+  description: SortOrder
+  url: SortOrder
+  resumeId: SortOrder
+  resume: ResumeOrderByWithRelationInput
+}
+
+input SocialWhereUniqueInput {
+  id: Int
+}
+
+enum SocialScalarFieldEnum {
+  id
+  title
+  description
+  url
+  resumeId
+}
+
+input ExperienceOrderByWithRelationInput {
+  id: SortOrder
+  resumeId: SortOrder
+  title: SortOrder
+  company: SortOrder
+  start: SortOrder
+  end: SortOrder
+  details: SortOrder
+  resume: ResumeOrderByWithRelationInput
+}
+
+input ExperienceWhereUniqueInput {
+  id: Int
+}
+
+enum ExperienceScalarFieldEnum {
+  id
+  resumeId
+  title
+  company
+  start
+  end
+  details
+}
+
+input EducationOrderByWithRelationInput {
+  id: SortOrder
+  resumeId: SortOrder
+  school: SortOrder
+  degree: SortOrder
+  start: SortOrder
+  end: SortOrder
+  details: SortOrder
+  resume: ResumeOrderByWithRelationInput
+}
+
+input EducationWhereUniqueInput {
+  id: Int
+}
+
+enum EducationScalarFieldEnum {
+  id
+  resumeId
+  school
+  degree
+  start
+  end
+  details
+}
+
+type Mutation {
+  createResume(createResumeInput: CreateResumeInput!): Resume!
+  updateResume(updateResumeInput: UpdateResumeInput!): Resume!
+  removeResume(where: ResumeWhereUniqueInput): Resume!
+  createProject(createProjectInput: CreateProjectInput!): Project!
+  updateProject(updateProjectInput: UpdateProjectInput!): Project!
+  removeProject(where: ProjectWhereUniqueInput): Project!
+  createUrl(createUrlInput: CreateUrlInput!): Url!
+  updateUrl(updateUrlInput: UpdateUrlInput!): Url!
+  removeUrl(where: UrlWhereUniqueInput): Url!
+  createTechnology(createTechnologyInput: CreateTechnologyInput!): Technology!
+  updateTechnology(updateTechnologyInput: UpdateTechnologyInput!): Technology!
+  removeTechnology(where: TechnologyWhereUniqueInput): Technology!
+  createSocial(createSocialInput: CreateSocialInput!): Social!
+  updateSocial(updateSocialInput: UpdateSocialInput!): Social!
+  removeSocial(where: SocialWhereUniqueInput): Social!
+  createExperience(createExperienceInput: CreateExperienceInput!): Experience!
+  updateExperience(updateExperienceInput: UpdateExperienceInput!): Experience!
+  removeExperience(where: ExperienceWhereUniqueInput): Experience!
+  createEducation(createEducationInput: CreateEducationInput!): Education!
+  updateEducation(updateEducationInput: UpdateEducationInput!): Education!
+  removeEducation(where: EducationWhereUniqueInput): Education!
+}
+
+input CreateResumeInput {
+  fullName: String!
+  summary: String!
+  skills: [String!]!
+}
+
+input UpdateResumeInput {
+  fullName: String
+  summary: String
+  skills: [String!]
+  id: Int!
+}
+
+input CreateProjectInput {
+  github: String
+  category: Category!
+  resumeId: Int
+  title: String!
+  description: String!
+  images: [String!]!
+  linesOfCode: Int!
+  tags: [String!]!
+}
+
+input UpdateProjectInput {
+  github: String
+  category: Category
+  resumeId: Int
+  title: String
+  description: String
+  images: [String!]
+  linesOfCode: Int
+  tags: [String!]
+  id: Int!
+}
+
+input CreateUrlInput {
+  projectId: Int
+  title: String!
+  description: String!
+  url: String!
+}
+
+input UpdateUrlInput {
+  projectId: Int
+  title: String
+  description: String
+  url: String
+  id: Int!
+}
+
+input CreateTechnologyInput {
+  projectId: Int
+  name: String!
+  description: String!
+}
+
+input UpdateTechnologyInput {
+  projectId: Int
+  name: String
+  description: String
+  id: Int!
+}
+
+input CreateSocialInput {
+  resumeId: Int
+  title: String!
+  description: String!
+  url: String!
+}
+
+input UpdateSocialInput {
+  resumeId: Int
+  title: String
+  description: String
+  url: String
+  id: Int!
+}
+
+input CreateExperienceInput {
+  end: DateTime
+  resumeId: Int!
+  title: String!
+  company: String!
+  start: DateTime!
+  details: [String!]!
+}
+
+input UpdateExperienceInput {
+  end: DateTime
+  resumeId: Int
+  title: String
+  company: String
+  start: DateTime
+  details: [String!]
+  id: Int!
+}
+
+input CreateEducationInput {
+  resumeId: Int!
+  school: String!
+  degree: String!
+  start: DateTime!
+  details: [String!]!
+}
+
+input UpdateEducationInput {
+  resumeId: Int
+  school: String
+  degree: String
+  start: DateTime
+  details: [String!]
+  id: Int!
+}
